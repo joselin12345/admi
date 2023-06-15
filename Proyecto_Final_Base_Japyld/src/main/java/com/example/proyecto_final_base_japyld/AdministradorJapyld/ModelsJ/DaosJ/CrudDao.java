@@ -44,13 +44,13 @@ public class CrudDao extends BaseDaoJapyld {
 
     public void editarJuego(Juegos juegos){
 
-        String sql = "UPDATE juegos " +
-                "SET nombreJuegos = ?, " +
-                "precio = ?, " +
-                "descripcion = ?, " +
-                "id_imagen = ?, " +
-                "id_categoria = ?" +
-                "WHERE idJuegos = ? ";
+        String sql = "UPDATE juegos  \n" +
+                "SET nombreJuegos = ?,\n" +
+                "precio = ?, \n" +
+                "descripcion = ?, \n" +
+                "id_imagen = ?, \n" +
+                "id_categoria = ?\n" +
+                "WHERE idJuegos = ?;";
 
         try(Connection connection = this.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql)){

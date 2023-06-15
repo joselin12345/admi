@@ -372,6 +372,7 @@
                           </div>
                         </div>
                       </div>
+                    </form>
                   </div>
                 </div>
 
@@ -405,10 +406,10 @@
 
                       <br>
                       <h6 class="text-primary" style="color:#31a290;">
-                        <label for="categia_id">Categoria</label>
+                        <label>Categoria</label>
                       </h6>
                       <div class="flex-grow-1 pr-3 custom-textbox">
-                        <select class="form-select" name="job_id">
+                        <select class="form-select" name="categoria_id">
                           <% for (Categoria c : categorias) { %>
                           <option value="<%=c.getIdCategorias()%>"
                                   <%=juego.getCategoria().getIdCategorias().equals(c.getIdCategorias()) ? "selected" : ""  %> >

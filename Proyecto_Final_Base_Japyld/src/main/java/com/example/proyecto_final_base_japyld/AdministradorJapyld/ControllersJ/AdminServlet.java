@@ -113,7 +113,7 @@ public class AdminServlet extends HttpServlet {
         juegos.setImagen(imagen);
 
         Categoria categoria = new Categoria();
-        categoria.setIdCategorias(request.getParameter("categia_id"));
+        categoria.setIdCategorias(request.getParameter("categoria_id"));
         juegos.setCategoria(categoria);
 
         return juegos;
