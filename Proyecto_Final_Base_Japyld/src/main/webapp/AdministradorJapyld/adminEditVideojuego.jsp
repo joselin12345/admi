@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.example.proyecto_final_base_japyld.BeansGenerales.Categoria" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.proyecto_final_base_japyld.BeansGenerales.Juegos" %><%--
   Created by IntelliJ IDEA.
   User: jossr
   Date: 4/06/2023
@@ -6,7 +8,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="juego" scope="request" type="com.example.proyecto_final_base_japyld.BeansGenerales.Juegos"/>
+<%
+  Juegos juego = (Juegos) request.getAttribute("juego");
+%>
+<%
+  ArrayList<Categoria> categorias  =(ArrayList<Categoria>) request.getAttribute("categorias");
+%>
 <html lang="en">
 
 <head>
@@ -324,7 +331,7 @@
           <!-- Main page content-->
           <div class="container-xl px-4 mt-4">
             <div class="col-12 col-xl-auto mb-3">
-              <a class="btn btn-sm btn-light text-primary" href="adminVideojuegos.html">
+              <a class="btn btn-sm btn-light text-primary" href="<%=request.getContextPath()%>/AdminServlet?action=listasPaginaVideojuegos">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left me-1"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 Volver a la lista de juegos
               </a>
@@ -332,55 +339,102 @@
 
 
             <div class="row">
-              <div class="col-xl-4">
-                <!-- Profile picture card-->
-                <div class="card mb-4 mb-xl-0">
-                  <div class="card-header m-0 font-weight-bold text-primary">EDITAR JUEGO</div>
-                  <div class="card-body text-center">
-                    <!-- Profile picture image-->
 
-                    <img class="img-account-profile mb-2" src="recursos/img/Legend_of_Zelda.jpg" alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button">Upload new image</button>
+
+                <div class="col-xl-4">
+                  <!-- Profile picture card-->
+                  <div class="card mb-4 mb-xl-0">
+                    <div class="card-header m-0 font-weight-bold text-primary">EDITAR JUEGO</div>
+                    <div class="card-body text-center">
+                      <!-- Profile picture image-->
+                      <img  src="<%=juego.getImagen().getDireccionArchivo()%>" class = "img-fluid" alt="">
+                      <!-- Profile picture help block-->
+                      <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                      <!-- Profile picture upload button-->
+                      <button class="btn btn-primary" type="button">Upload new image</button>
+                    </div>
+                    <form method="POST" action="AdminServlet?action=actualizar" class="col-md-6 col-lg-6">
+                      <input type="hidden" name="id_juego" value="<%= juego.getIdJuegos()%>"/>
+                      <input type="hidden" name="imagenen" value="<%= juego.getImagen().getIdImagenes()%>"/>
+                      <input type="hidden" name="nombre" value="<%= juego.getNombreJuegos()%>"/>
+
+
+                      <div class="container">
+                        <br>
+                        <div class="d-flex">
+                          <div>
+                            <h6 class="text-primary" style="color:#31a290">
+                              <label for="precio">Precio</label>
+                            </h6>
+                            <div class="flex-grow-1 pr-3 custom-textbox">
+                              <input type="text" class="form-control form-control-sm" name="precio" id="precio" value="<%= juego.getPrecio() == null ? "" : juego.getPrecio()%>" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-8">
+                  <!-- Account details card-->
+                  <div class="card mb-4">
+                    <div class="card-header m-0 font-weight-bold text-primary">DETALLES DEL JUEGO</div>
+
+                    <div class="container">
+                      <br>
+                      <h6 class="text-primary" style="color:#31a290;">NOMBRE DEL JUEGO</h6>
+                      <div class="d-flex">
+                        <div id="texto-editable" contenteditable="false" class="flex-grow-1 pr-3 custom-textbox"><b><%=juego.getNombreJuegos()%></b></div>
+                      </div>
+                    </div>
+
+                    <br>
+                    <div class="container">
+                      <br>
+                      <h6 class="text-primary" style="color:#31a290;">
+                        <label for="descripcion">Descripción</label>
+                      </h6>
+                      <div class="flex-grow-1 pr-3 custom-textbox">
+                        <div>
+                          <input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion" value="<%= juego.getDescripcion() == null ? "" : juego.getDescripcion()%>">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card-body center-h center-h">
+
+                      <br>
+                      <h6 class="text-primary" style="color:#31a290;">
+                        <label for="categia_id">Categoria</label>
+                      </h6>
+                      <div class="flex-grow-1 pr-3 custom-textbox">
+                        <select class="form-select" name="job_id">
+                          <% for (Categoria c : categorias) { %>
+                          <option value="<%=c.getIdCategorias()%>"
+                                  <%=juego.getCategoria().getIdCategorias().equals(c.getIdCategorias()) ? "selected" : ""  %> >
+                            <%=c.getNombre()%>
+                          </option>
+                          <% } %>
+                        </select>
+                      </div>
+                      <br>
+                      <br>
+                      <br>
+                      <br>
+                      <div class="col-12 col-xl-auto mb-3">
+                        <div class="d-flex justify-content-between">
+                          <a class="btn btn-outline-danger" href="AdministradorJapyld/adminDeleteVideojuego.jsp " class="btn btn-danger">Eliminar juego del catálogo</a>
+                          <input  type="submit" value="Actualizar" class="btn btn-outline-primary"/>
+
+                        </div>
+                        <!-- Submit button-->
+                      </div>
+                    </div>
                   </div>
 
-                  <form method="POST" action="AdminServlet?action=editar" class="col-md-6 col-lg-6">
-                    <input type="hidden" name="id_juego" value="<%= juego.getIdJuegos()%>"/>
-                    <div class="mb-3">
-                      <label for="first_name">Nombre de juego </label>
-                      <input type="text" class="form-control form-control-sm" name="nombre" id="first_name"
-                             value="<%= juego.getNombreJuegos()== null ? "" : juego.getNombreJuegos()%>" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="last_name">Precio</label>
-                      <input type="text" class="form-control form-control-sm" name="precio" id="last_name"
-                             value="<%= juego.getPrecio() == null ? "" : juego.getPrecio()%>" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="email">Descripción</label>
-                      <input type="text" class="form-control form-control-sm" name="descripcion" id="email"
-                             value="<%= juego.getDescripcion() == null ? "" : juego.getDescripcion()%>">
-                    </div>
-                    <div class="mb-3">
-                      <label for="job_id">Job</label>
-                      <select class="form-select" name="job_id">
-                        <% for (Job job : listaTrabajos) { %>
-                        <option value="<%=job.getJobId()%>"
-                                <%=empleado.getJob().getJobId().equals(job.getJobId()) ? "selected" : ""  %> >
-                          <%=job.getJobTitle()%>
-                        </option>
-                        <% } %>
-                      </select>
-                    </div>
-
-                    <a href="<%= request.getContextPath()%>/AdminServlet" class="btn btn-danger">Cancelar</a>
-                    <input type="submit" value="Actualizar" class="btn btn-primary"/>
-                  </form>
-
                 </div>
-              </div>
+
+              </form>
             </div>
           </div>
         </main>
@@ -416,15 +470,15 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cerrar sesión</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-body">Seleccione "Confirmar" si desea salir de su cuenta</div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-primary" href="login.html">Confirmar</a>
       </div>
     </div>
   </div>

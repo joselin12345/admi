@@ -1,6 +1,7 @@
 package com.example.proyecto_final_base_japyld.AdministradorJapyld.ControllersJ;
 
 import com.example.proyecto_final_base_japyld.AdministradorJapyld.ModelsJ.DaosJ.AdminDao;
+import com.example.proyecto_final_base_japyld.AdministradorJapyld.ModelsJ.DaosJ.CategoriaDao;
 import com.example.proyecto_final_base_japyld.AdministradorJapyld.ModelsJ.DaosJ.CrudDao;
 import com.example.proyecto_final_base_japyld.BeansGenerales.Categoria;
 import com.example.proyecto_final_base_japyld.BeansGenerales.Imagen;
@@ -25,6 +26,7 @@ public class AdminServlet extends HttpServlet {
         RequestDispatcher view;
         AdminDao adminDao = new AdminDao();
         CrudDao crudDao = new CrudDao();
+        CategoriaDao categoriaDao = new CategoriaDao();
 
         switch (action){
             case "lista":
@@ -60,8 +62,7 @@ public class AdminServlet extends HttpServlet {
                     if(juego != null){
 
                         request.setAttribute("juego", juego);
-                        // enviar lista de juegos
-                        // enviar lista de categoria para combox
+                        request.setAttribute("categorias",categoriaDao.listaCategoria());
                         view = request.getRequestDispatcher("AdministradorJapyld/adminEditVideojuego.jsp");
                         view.forward(request,response);
                     }else{
@@ -108,11 +109,11 @@ public class AdminServlet extends HttpServlet {
         juegos.setDescripcion(request.getParameter("descripcion"));
 
         Imagen imagen = new Imagen();
-        imagen.setIdImagenes(Integer.parseInt(request.getParameter("id_imagen")));
+        imagen.setIdImagenes(Integer.parseInt(request.getParameter("imagenen")));
         juegos.setImagen(imagen);
 
         Categoria categoria = new Categoria();
-        categoria.setIdCategorias(request.getParameter("id_categoria"));
+        categoria.setIdCategorias(request.getParameter("categia_id"));
         juegos.setCategoria(categoria);
 
         return juegos;

@@ -18,8 +18,9 @@ public class CrudDao extends BaseDaoJapyld {
 
         String sql = "SELECT * FROM juegos j\n" +
                 "left join categorias c on c.idCategorias = j.id_categoria \n" +
-                "left join imagenes i on i.idImagenes = j.id_imagen " +
-                "WHERE j.idJuegos = ?;";
+                "left join imagenes i on i.idImagenes = j.id_imagen \n " +
+                "WHERE j.idJuegos = ? \n" +
+                "order by j.idJuegos";
 
         try(Connection connection = this.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -28,8 +29,7 @@ public class CrudDao extends BaseDaoJapyld {
 
             try(ResultSet resultSet = preparedStatement.executeQuery()){
                 if(resultSet.next()){
-                    juegos = new Juegos();
-                    infojuegos(juegos,resultSet);
+                    juegos = infojuegos(resultSet);
 
                 }
             }
@@ -44,8 +44,12 @@ public class CrudDao extends BaseDaoJapyld {
 
     public void editarJuego(Juegos juegos){
 
-        String sql = "UPDATE juegos SET nombreJuegos = ?, precio = ?, " +
-                "descripcion = ?, id_imagen = ?, id_categoria = ?" +
+        String sql = "UPDATE juegos " +
+                "SET nombreJuegos = ?, " +
+                "precio = ?, " +
+                "descripcion = ?, " +
+                "id_imagen = ?, " +
+                "id_categoria = ?" +
                 "WHERE idJuegos = ? ";
 
         try(Connection connection = this.getConnection();
@@ -67,8 +71,9 @@ public class CrudDao extends BaseDaoJapyld {
 
     // METODO QUE GUARDA TODA LA INFORMACION DE UN JUEGO
 
-    private void infojuegos(Juegos juegos, ResultSet resultSet) throws SQLException{
+    private Juegos infojuegos( ResultSet resultSet) throws SQLException{
 
+        Juegos juegos = new Juegos();
         juegos.setIdJuegos(resultSet.getInt(1));
         juegos.setNombreJuegos(resultSet.getString(2));
         juegos.setStock(resultSet.getInt(3));
@@ -78,13 +83,15 @@ public class CrudDao extends BaseDaoJapyld {
 
         Imagen imagen = new Imagen();
         imagen.setIdImagenes(resultSet.getInt(7));
-        imagen.setDireccionArchivo(resultSet.getString("i.direccion_archivo"));
+        imagen.setDireccionArchivo(resultSet.getString(14));
         juegos.setImagen(imagen);
 
         Categoria categoria = new Categoria();
         categoria.setIdCategorias(resultSet.getString(8));
-        categoria.setNombre(resultSet.getString("c.nombre"));
+        categoria.setNombre(resultSet.getString(10));
         juegos.setCategoria(categoria);
 
+        return juegos;
     }
+
 }
