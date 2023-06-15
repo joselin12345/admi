@@ -20,7 +20,7 @@ public class AgregarJuegoUsuarioServlet extends HttpServlet {
         switch (action){
             case "agregarJuegoUsuario":
                 request.setAttribute("juegos",adminDao.infoJuegoNuevo());
-                request.getRequestDispatcher("admi/AgregarJuegoAdmi.jsp").forward(request,response);
+                request.getRequestDispatcher("AdministradorJapyld/AgregarJuegoAdmi.jsp").forward(request,response);
                 break;
         }
 

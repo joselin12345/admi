@@ -1,5 +1,6 @@
-<%@ page import="com.example.proyecto_base_japyld.models.beans.VentaJuegosGeneral" %>
-<%@ page import="java.util.ArrayList" %><%--
+
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.proyecto_final_base_japyld.BeansGenerales.VentaJuegosGeneral" %><%--
   Created by IntelliJ IDEA.
   User: jossr
   Date: 5/06/2023

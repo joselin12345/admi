@@ -1,5 +1,7 @@
-<%@ page import="com.example.proyecto_base_japyld.models.beans.Juegos" %>
-<%@ page import="java.util.ArrayList" %><%--
+
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.proyecto_final_base_japyld.BeansGenerales.Juegos" %>
+<%@ page import="com.example.proyecto_final_base_japyld.AdministradorJapyld.ModelsJ.DtoJ.JuegosPopulares" %><%--
   Created by IntelliJ IDEA.
   User: jossr
   Date: 5/06/2023
@@ -9,10 +11,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-  ArrayList<Juegos> lista  =(ArrayList<Juegos>) request.getAttribute("lista");
+  ArrayList<JuegosPopulares> lista  =(ArrayList<JuegosPopulares>) request.getAttribute("lista");
 %>
 <%
-  ArrayList<Juegos> lista1  =(ArrayList<Juegos>) request.getAttribute("lista1");
+  ArrayList<JuegosPopulares> lista1  =(ArrayList<JuegosPopulares>) request.getAttribute("lista1");
 %>
 
 <%
@@ -364,10 +366,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for (Juegos j :lista) { %>
+                                <% for (JuegosPopulares j :lista) { %>
                                 <tr>
-                                  <td><%=j.getNombreJuegos()%>></td>
-                                  <td class="text-center">15</td>
+                                  <td><%=j.getNombre()%></td>
+                                  <td class="text-center"><%=j.getCantidadVentasJuegos()%></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -402,10 +404,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% for (Juegos j :lista) { %>
+                                <% for (JuegosPopulares j :lista) { %>
                                 <tr>
-                                  <td><%=j.getNombreJuegos()%>></td>
-                                  <td class="text-center">30</td>
+                                  <td><%=j.getNombre()%></td>
+                                  <td class="text-center"><%=j.getCantidadVentasCategorias()%></td>
                                 </tr>
                                 <%}%>
                                 </tbody>
@@ -468,7 +470,7 @@
                                 <td class="text-center"><%=j.getCategoria().getNombre()%></td>
                                 <td class="text-center"><%=j.getStock()%></td>
                                 <td class="text-center">
-                                  <a class="btn btn-primary" href="adminEditVideojuegos.html">
+                                  <a class="btn btn-primary" href="<%=request.getContextPath()%>/AdminServlet?action=editar&id=<%=j.getIdJuegos()%>">
                                     Editar
                                   </a>
                                 </td>

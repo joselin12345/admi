@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="juego" scope="request" type="com.example.proyecto_final_base_japyld.BeansGenerales.Juegos"/>
 <html lang="en">
 
 <head>
@@ -40,13 +41,13 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Custom fonts for this template-->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="recursos/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="recursos/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -237,7 +238,7 @@
               </h6>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../img/undraw_profile_1.svg"
+                  <img class="rounded-circle" src="recursos/img/undraw_profile_1.svg"
                        alt="...">
                   <div class="status-indicator bg-success"></div>
                 </div>
@@ -249,7 +250,7 @@
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../img/undraw_profile_2.svg"
+                  <img class="rounded-circle" src="recursos/img/undraw_profile_2.svg"
                        alt="...">
                   <div class="status-indicator"></div>
                 </div>
@@ -261,7 +262,7 @@
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../img/undraw_profile_3.svg"
+                  <img class="rounded-circle" src="recursos/img/undraw_profile_3.svg"
                        alt="...">
                   <div class="status-indicator bg-warning"></div>
                 </div>
@@ -338,194 +339,46 @@
                   <div class="card-body text-center">
                     <!-- Profile picture image-->
 
-                    <img class="img-account-profile mb-2" src="../img/Legend_of_Zelda.jpg" alt="">
+                    <img class="img-account-profile mb-2" src="recursos/img/Legend_of_Zelda.jpg" alt="">
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
                     <button class="btn btn-primary" type="button">Upload new image</button>
                   </div>
 
-
-                  <div class="container">
-                    <br>
-                    <h6 class="text-primary" style="color:#31a290;">PRECIO</h6>
-                    <div class="d-flex">
-                      <div id="texto-editable3" contenteditable="false" class="flex-grow-1 pr-3 custom-textbox">S/ 170</div>
-                      <div>
-                        <button id="editar-btn3" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                        <button id="guardar-btn3" class="btn btn-success" style="display: none;"><i class="fas fa-save"></i></button>
-                      </div>
+                  <form method="POST" action="AdminServlet?action=editar" class="col-md-6 col-lg-6">
+                    <input type="hidden" name="id_juego" value="<%= juego.getIdJuegos()%>"/>
+                    <div class="mb-3">
+                      <label for="first_name">Nombre de juego </label>
+                      <input type="text" class="form-control form-control-sm" name="nombre" id="first_name"
+                             value="<%= juego.getNombreJuegos()== null ? "" : juego.getNombreJuegos()%>" required>
                     </div>
-                  </div>
-
-                  <script3 src="https://code.jquery.com/jquery-3.6.0.min.js"></script3>
-                  <script>
-                    $(document).ready(function() {
-                      // Obtener el cuadro de texto editable y los botones
-                      var textoEditable3 = $('#texto-editable');
-                      var editarBtn3 = $('#editar-btn');
-                      var guardarBtn3 = $('#guardar-btn');
-
-                      // Al hacer clic en el botón "Editar"
-                      editarBtn3.click(function() {
-                        // Habilitar la edición del cuadro de texto
-                        textoEditable3.attr('contenteditable', 'true');
-                        textoEditable3.focus();
-
-                        // Ocultar el botón "Editar" y mostrar el botón "Guardar"
-                        editarBtn3.hide();
-                        guardarBtn3.show();
-                      });
-
-                      // Al hacer clic en el botón "Guardar"
-                      guardarBtn3.click(function() {
-                        // Deshabilitar la edición del cuadro de texto
-                        textoEditable3.attr('contenteditable', 'false');
-
-                        // Ocultar el botón "Guardar" y mostrar el botón "Editar"
-                        guardarBtn3.hide();
-                        editarBtn3.show();
-                      });
-                    });
-                  </script>
-                  <BR>
-                </div>
-              </div>
-              <div class="col-xl-8">
-                <!-- Account details card-->
-                <div class="card mb-4">
-                  <div class="card-header m-0 font-weight-bold text-primary">DETALLES DEL JUEGO</div>
-
-                  <div class="container">
-                    <br>
-                    <h6 class="text-primary" style="color:#31a290;">NOMBRE DEL JUEGO</h6>
-                    <div class="d-flex">
-                      <div id="texto-editable" contenteditable="false" class="flex-grow-1 pr-3 custom-textbox"><b>THE LAST OF US</b></div>
-                      <div>
-                        <button id="editar-btn" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                        <button id="guardar-btn" class="btn btn-success" style="display: none;"><i class="fas fa-save"></i></button>
-                      </div>
+                    <div class="mb-3">
+                      <label for="last_name">Precio</label>
+                      <input type="text" class="form-control form-control-sm" name="precio" id="last_name"
+                             value="<%= juego.getPrecio() == null ? "" : juego.getPrecio()%>" required>
                     </div>
-                  </div>
-
-                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                  <script>
-                    $(document).ready(function() {
-                      // Obtener el cuadro de texto editable y los botones
-                      var textoEditable = $('#texto-editable');
-                      var editarBtn = $('#editar-btn');
-                      var guardarBtn = $('#guardar-btn');
-
-                      // Al hacer clic en el botón "Editar"
-                      editarBtn.click(function() {
-                        // Habilitar la edición del cuadro de texto
-                        textoEditable.attr('contenteditable', 'true');
-                        textoEditable.focus();
-
-                        // Ocultar el botón "Editar" y mostrar el botón "Guardar"
-                        editarBtn.hide();
-                        guardarBtn.show();
-                      });
-
-                      // Al hacer clic en el botón "Guardar"
-                      guardarBtn.click(function() {
-                        // Deshabilitar la edición del cuadro de texto
-                        textoEditable.attr('contenteditable', 'false');
-
-                        // Ocultar el botón "Guardar" y mostrar el botón "Editar"
-                        guardarBtn.hide();
-                        editarBtn.show();
-                      });
-                    });
-                  </script>
-                  <br>
-                  <div class="container">
-                    <br>
-                    <h6 class="text-primary" style="color:#31a290;">DESCRIPCIÓN DEL JUEGO</h6>
-                    <div class="d-flex">
-                      <div id="texto-editable2" contenteditable="false" class="flex-grow-1 pr-3 custom-textbox">The Last of Us es un videojuego de terror, acción y aventura. La trama describe las vivencias de Joel y Ellie, un par de supervivientes de una pandemia en Estados Unidos que provoca la mutación de los seres humanos en criaturas caníbales.</div>
-                      <div>
-                        <button id="editar-btn2" class="btn btn-primary"><i class="fas fa-edit"></i></button>
-                        <button id="guardar-btn2" class="btn btn-success" style="display: none;"><i class="fas fa-save"></i></button>
-                      </div>
+                    <div class="mb-3">
+                      <label for="email">Descripción</label>
+                      <input type="text" class="form-control form-control-sm" name="descripcion" id="email"
+                             value="<%= juego.getDescripcion() == null ? "" : juego.getDescripcion()%>">
                     </div>
-                  </div>
-
-                  <script2 src="https://code.jquery.com/jquery-3.6.0.min.js"></script2>
-                  <script>
-                    $(document).ready(function() {
-                      // Obtener el cuadro de texto editable y los botones
-                      var textoEditable2 = $('#texto-editable');
-                      var editarBtn2 = $('#editar-btn');
-                      var guardarBtn2 = $('#guardar-btn');
-
-                      // Al hacer clic en el botón "Editar"
-                      editarBtn2.click(function() {
-                        // Habilitar la edición del cuadro de texto
-                        textoEditable2.attr('contenteditable', 'true');
-                        textoEditable2.focus();
-
-                        // Ocultar el botón "Editar" y mostrar el botón "Guardar"
-                        editarBtn2.hide();
-                        guardarBtn2.show();
-                      });
-
-                      // Al hacer clic en el botón "Guardar"
-                      guardarBtn2.click(function() {
-                        // Deshabilitar la edición del cuadro de texto
-                        textoEditable2.attr('contenteditable', 'false');
-
-                        // Ocultar el botón "Guardar" y mostrar el botón "Editar"
-                        guardarBtn2.hide();
-                        editarBtn2.show();
-                      });
-                    });
-                  </script>
-
-
-
-                  <div class="card-body center-h center-h">
-
-                    <br>
-                    <h6 class="text-primary" style="color:#31a290;">CATEGORÍA DE JUEGO</h6>
-                    <br>
-                    <div class="text-center">
-                      <button class="btn btn-info" type="button">ACCIÓN</button>
-                      <button class="btn btn-info" type="button">ARCADE</button>
-                      <button class="btn btn-info" type="button">ESTRATEGIA</button>
-                      <button class="btn btn-info" type="button">TERROR</button>
-                      <button class="btn btn-info" type="button">CARRERA</button>
+                    <div class="mb-3">
+                      <label for="job_id">Job</label>
+                      <select class="form-select" name="job_id">
+                        <% for (Job job : listaTrabajos) { %>
+                        <option value="<%=job.getJobId()%>"
+                                <%=empleado.getJob().getJobId().equals(job.getJobId()) ? "selected" : ""  %> >
+                          <%=job.getJobTitle()%>
+                        </option>
+                        <% } %>
+                      </select>
                     </div>
 
-                    <br>
-                    <br>
-                    <h6 class="text-primary" style="color:#31a290;">TIPO DE CONSOLA</h6>
-                    <div class="text-center">
-                      <button class="btn btn-primary btn-xl">
-                        <i class="fab fa-playstation fa-3x"></i>
-                      </button>
-                      <button class="btn btn-primary btn-xl">
-                        <i class="fab fa-xbox fa-3x"></i>
-                      </button>
-                      <button class="btn btn-primary btn-xl">
-                        <i class="fas fa-keyboard fa-3x"></i>
-                      </button>
-                      <br>
-                      <br>
-                      <br>
-                    </div>
+                    <a href="<%= request.getContextPath()%>/AdminServlet" class="btn btn-danger">Cancelar</a>
+                    <input type="submit" value="Actualizar" class="btn btn-primary"/>
+                  </form>
 
-
-                    <div class="col-12 col-xl-auto mb-3">
-                      <div class="d-flex justify-content-between">
-                        <button class="btn btn-outline-danger" onclick="window.location.href='adminDeleteVideojuego.html'" type="button">Eliminar juego del catálogo</button>
-                        <button class="btn btn-primary" onclick="window.location.href='adminVideojuegos.html'" type="button">Guardar cambios</button>
-
-                      </div>
-
-                      <!-- Submit button-->
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -590,21 +443,21 @@
 
 
 <!-- Bootstrap core JavaScript-->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="recursos/vendor/jquery/jquery.min.js"></script>
+<script src="recursos/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="recursos/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../js/sb-admin-2.min.js"></script>
+<script src="recursos/js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="../vendor/chart.js/Chart.min.js"></script>
+<script src="recursos/vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="../js/demo/chart-area-demo.js"></script>
-<script src="../js/demo/chart-pie-demo.js"></script>
+<script src="recursos/js/demo/chart-area-demo.js"></script>
+<script src="recursos/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

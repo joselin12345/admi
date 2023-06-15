@@ -19,7 +19,7 @@ public class JuegosReservadosServlet extends HttpServlet {
         request.setAttribute("lista20dias", juegosReservadosDaos.tabla20Dias());
         request.setAttribute("lista10dias", juegosReservadosDaos.tabla10Dias());
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("admi/ReservasAdmi.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("AdministradorJapyld/ReservasAdmi.jsp");
         requestDispatcher.forward(request,response);
     }
 

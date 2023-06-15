@@ -20,7 +20,7 @@ public class OfertasServlet extends HttpServlet {
         int id_veta_int = Integer.parseInt(id_venta);
         Juegos juegos = ofertasDao.obtenerJuego(id_veta_int);
         request.setAttribute("juegos", juegos);
-        request.getRequestDispatcher("admi/NuevaOferta.jsp").forward(request,response);
+        request.getRequestDispatcher("AdministradorJapyld/NuevaOferta.jsp").forward(request,response);
 
 
     }

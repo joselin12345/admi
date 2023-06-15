@@ -1,5 +1,6 @@
 package com.example.proyecto_final_base_japyld.AdministradorJapyld.ModelsJ.DaosJ;
 
+import com.example.proyecto_final_base_japyld.AdministradorJapyld.ModelsJ.DtoJ.JuegosPopulares;
 import com.example.proyecto_final_base_japyld.BaseDaoJapyld;
 import com.example.proyecto_final_base_japyld.BeansGenerales.*;
 
@@ -9,7 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+// DAO DE LAS LISTAS
+
 public class AdminDao extends BaseDaoJapyld {
+
+    // PAGINA INICIO
     public ArrayList<JuegosCompradosReservados> primeraTabla(){
 
             ArrayList<JuegosCompradosReservados> ultimasCompras= new ArrayList<>();
@@ -95,12 +100,18 @@ public class AdminDao extends BaseDaoJapyld {
 
     // pagina videojuegos
 
-    public ArrayList<Juegos> terceraTabla(){
+    public ArrayList<JuegosPopulares> terceraTabla(){
 
-        ArrayList<Juegos> lista= new ArrayList<>();
+        ArrayList<JuegosPopulares> lista= new ArrayList<>();
 
 
-        String sql1 = "select * from juegos";
+        String sql1 = "SELECT COUNT(nombreJuegos) as 'Juegos_comprados_por_título', rating, nombreJuegos, estadoCompraJuego, idJuegos\n" +
+                "                FROM juegoscompradosreservados jc\n" +
+                "                INNER JOIN juegos j ON jc.id_juego = j.idJuegos\n" +
+                "                WHERE jc.estadoCompraJuego = 'Comprado'\n" +
+                "                GROUP BY j.nombreJuegos, rating, estadoCompraJuego, idJuegos\n" +
+                "                ORDER BY count(nombreJuegos) desc\n" +
+                "                limit 5;";
 
 
         try(Connection connection = this.getConnection();
@@ -109,12 +120,10 @@ public class AdminDao extends BaseDaoJapyld {
 
             while (resultSet.next()){
 
-                Juegos juegos = new Juegos();
-
-                juegos.setIdJuegos(resultSet.getInt(1));
-                juegos.setNombreJuegos(resultSet.getString(2));
-
-                lista.add(juegos);
+                JuegosPopulares videoJuego2 = new JuegosPopulares();
+                videoJuego2.setNombre(resultSet.getString(3));
+                videoJuego2.setCantidadVentasJuegos(resultSet.getInt(1));
+                lista.add(videoJuego2);
             }
 
         }catch (SQLException e){
@@ -123,28 +132,35 @@ public class AdminDao extends BaseDaoJapyld {
         return lista;
     }
 
-    public ArrayList<Juegos> cuartaTabla(){
 
-        ArrayList<Juegos> juegos2= new ArrayList<>();
+    public ArrayList<JuegosPopulares> cuartaTabla(){
+
+        ArrayList<JuegosPopulares> lista3= new ArrayList<>();
 
 
-        String sql1 = "select * from juegos";
+        String sql1 = "SELECT COUNT(nombreJuegos) as 'Juegos_comprados_por_título', rating, nombreJuegos, estadoCompraJuego, idJuegos\n" +
+                "                FROM juegoscompradosreservados jc\n" +
+                "                INNER JOIN juegos j ON jc.id_juego = j.idJuegos\n" +
+                "                WHERE jc.estadoCompraJuego = 'Comprado'\n" +
+                "                GROUP BY j.nombreJuegos, rating, estadoCompraJuego, idJuegos\n" +
+                "                ORDER BY count(nombreJuegos) desc\n" +
+                "                limit 5;";
 
         try(Connection connection = this.getConnection();
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(sql1)){
 
             while (resultSet.next()){
-                Juegos juegos1 =new Juegos();
-
-                juegos1.setNombreJuegos(resultSet.getString(2));
-                juegos2.add(juegos1);
+                JuegosPopulares videoJuego3 = new JuegosPopulares();
+                videoJuego3.setNombre(resultSet.getString(3));
+                videoJuego3.setCantidadVentasCategorias(resultSet.getInt(1));
+                lista3.add(videoJuego3);
             }
 
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return juegos2;
+        return lista3;
     }
 
     public ArrayList<Juegos> quintaTabla(){
@@ -227,7 +243,6 @@ public class AdminDao extends BaseDaoJapyld {
 
         ArrayList<VentaJuegosGeneral> nuevosJuegos = new ArrayList<>();
 
-        // CAMBIA QUERY A DISPONIBILIDAD IGUAL A NUEVO
         String sql = "SELECT * FROM ventajuegosgeneral c\n" +
                 "left join personas p on c.id_usuario = p.idPersona\n" +
                 "left join juegos j on c.id_juego = j.idJuegos\n" +
@@ -267,7 +282,7 @@ public class AdminDao extends BaseDaoJapyld {
 
         ArrayList<VentaJuegosGeneral> nuevosOfertas = new ArrayList<>();
 
-        // CAMBIA QUERY en ESTADO DE VENTA NO LEIDO
+
         String sql = "SELECT * FROM ventajuegosgeneral c\n" +
                 "left join personas p on c.id_usuario = p.idPersona\n" +
                 "left join juegos j on c.id_juego = j.idJuegos\n" +

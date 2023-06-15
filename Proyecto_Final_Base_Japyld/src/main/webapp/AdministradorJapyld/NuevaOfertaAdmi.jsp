@@ -1,4 +1,5 @@
-<%@ page import="com.example.proyecto_base_japyld.models.beans.Juegos" %><%--
+<%@ page import="com.example.proyecto_base_japyld.models.beans.Juegos" %>
+<%@ page import="com.example.proyecto_final_base_japyld.BeansGenerales.Juegos" %><%--
   Created by IntelliJ IDEA.
   User: jossr
   Date: 5/06/2023
